@@ -7,16 +7,16 @@ import static io.restassured.RestAssured.given;
 
 public class APITests {
 
-    @Test
-    public void getCategories() {
-
-        String endpoint = "http://localhost:80/api_testing/category/read.php";
-
-        ValidatableResponse response = given()
-        .when().get(endpoint).then();
-
-        response.log().body();
-    }
+//    @Test
+//    public void getCategories() {
+//
+//        String endpoint = "http://localhost:80/api_testing/category/read.php";
+//
+//        ValidatableResponse response = given()
+//        .when().get(endpoint).then();
+//
+//        response.log().body();
+//    }
 
 //    @Test
 //    public void getSingleCategory() {
@@ -38,4 +38,5 @@ public class APITests {
 //        response.log().body();
 //
 //    }
+
 }

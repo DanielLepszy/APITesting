@@ -4,33 +4,56 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import java.io.IOException;
-import java.net.URL;
+import java.util.MissingResourceException;
 
 
 public class FileResourcesTest {
 
-    @DisplayName("Test loading a properties file")
+    @DisplayName("Test loading an single property")
     @Test
-    void loadPropertiesTest()   {
-
-        String fileName = "APITestingConfiguration/api.properties";
-
+    public void referenceToProperty() {
+        String fileName = "api";
+        String propertyName = "HOST_URL";
         ReaderFileResources reader = new ReaderFileResources();
-        ClassLoader loader = reader.readTestResource(fileName);
-        Assertions.assertNotNull(loader);
+        String value = reader.readProperty(fileName, propertyName);
+        Assertions.assertEquals(value, "http://localhost:80/");
 
     }
-    @DisplayName("Test loading a properties file")
+    @DisplayName("Test loading an single property from non-existed property file")
     @Test
-    void loadSinglePropertyTest()   {
-        String filePath = "APITestingConfiguration/api.properties";
-        String propertyName = "baseUrl";
+    public void referenceToNonExistedPropertyFile() {
+        String fileName = "Non-existed";
+        String propertyName = "HOST_URL";
+        String expectedExceptionMessage = String.format("Can't find bundle for base name API_CONFIG.%s, locale en_US", fileName);
         ReaderFileResources reader = new ReaderFileResources();
-       String propertyValue =  reader.readSingleProperty(filePath,propertyName);
+        MissingResourceException thrown = Assertions.assertThrows(MissingResourceException.class,() ->{
+            reader.readProperty(fileName, propertyName);
+        });
+        Assertions.assertEquals(expectedExceptionMessage,thrown.getMessage());
 
-       Assertions.assertEquals(propertyValue,"http://localhost:80/");
+    }
+    @DisplayName("Test loading an single property from non-existed property key")
+    @Test
+    public void referenceToNonExistedPropertyKey() {
+        String fileName = "api";
+        String propertyName = "Non-existed";
+        String expectedExceptionMessage = String.format("Can't find resource for bundle java.util.PropertyResourceBundle, key %s", propertyName);
+        ReaderFileResources reader = new ReaderFileResources();
+        MissingResourceException thrown = Assertions.assertThrows(MissingResourceException.class,() ->{
+            reader.readProperty(fileName, propertyName);
+        });
+        Assertions.assertEquals(expectedExceptionMessage,thrown.getMessage());
 
+    }
+    @DisplayName("Test loading an single property reference to another file path")
+    @Test
+    public void referenceToAnotherConfigFile() {
+        String fileName = "jdbc";
+        String propertyName = "USER";
+        String filePath = "DATABASE";
+        ReaderFileResources reader = new ReaderFileResources();
+        String value =  reader.readProperty(fileName, propertyName,filePath);
+        Assertions.assertEquals(value, "root");
 
     }
 }

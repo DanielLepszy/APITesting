@@ -1,57 +1,29 @@
 package reader;
 
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 
 public class ReaderFileResources {
 
-    public ClassLoader readTestResource(String fileName)   {
+    public String readProperty(String fileName, String  propertyName, String... optionalPath)  {
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        try (InputStream inputStream = classLoader.getResourceAsStream(fileName);
-             InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-             BufferedReader reader = new BufferedReader(streamReader)) {
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+        String path = "API_CONFIG";
+        if(optionalPath!=null && !optionalPath.equals(path) && optionalPath.length!=0){
+            StringBuilder newPath = new StringBuilder();
+            for (String letter:optionalPath
+                 ) {
+                newPath.append(letter);
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            path = newPath.toString();
         }
+        Optional<String> file = Optional.of(fileName);
+        Optional<String> property = Optional.of(propertyName);
 
-        return getClass().getClassLoader();
+        String fullFilePath = String.format("%1$s.%2$s",path, file.get());
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(fullFilePath);
+        return resourceBundle.getString(property.get());
     }
-    public String readSingleProperty(String filePath,String propertyName)  {
 
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        URL resource = classLoader.getResource(filePath);
-        if (resource == null) {
-            throw new IllegalArgumentException("file not found! " + filePath);
-        }
-
-        File file = null;
-        List<String> lines = null;
-        try {
-            file = new File(resource.toURI());
-           lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
-        }
-        assert lines != null;
-        lines.stream().filter(s ->
-                    s.equals(propertyName))
-                .collect(Collectors.toList());
-
-        return lines.get(0).split("=")[1];
-    }
 
 }
