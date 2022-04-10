@@ -1,42 +1,48 @@
 package training;
 
 import io.restassured.response.ValidatableResponse;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import training.util.RestAssuredUtil;
 
 import static io.restassured.RestAssured.given;
 
-public class APITests {
+public class APITests extends RestAssuredUtil {
 
-//    @Test
-//    public void getCategories() {
-//
-//        String endpoint = "http://localhost:80/api_testing/category/read.php";
-//
-//        ValidatableResponse response = given()
-//        .when().get(endpoint).then();
-//
-//        response.log().body();
-//    }
+    @BeforeAll
+    public static void setConfiguration(){
+        String basePath = reader.readProperty("api", "BASE_PATH");
+        setBasePath(basePath);
+    }
+    @Test
+    public void getCategories() {
 
-//    @Test
-//    public void getSingleCategory() {
-//        String endpoint = "http://localhost:3306/api_testing/categories/read.php";
-//        ValidatableResponse response = given()
-//                .queryParam("id", 3)
-//                .when()
-//                .get(endpoint)
-//                .then();
-//
-//        response.log().body();
-//    }
-//
-//    @Test
-//    public void getCProducts() {
-//        String endpoint = "http://localhost:3306/api_testing/product/read.php";
-//        ValidatableResponse response = given().when().get(endpoint).then();
-//
-//        response.log().body();
-//
-//    }
+        String endpoint = "/category/read.php";
+        ValidatableResponse response = given()
+        .when().get(endpoint).then();
+
+        response.log().body();
+    }
+
+    @Test
+    public void getSingleProduct() {
+        String endpoint = "/product/read_one.php";
+        ValidatableResponse response = given()
+                .queryParam("id", 3)
+                .when()
+                .get(endpoint)
+                .then();
+
+        response.log().body();
+    }
+
+    @Test
+    public void getCProducts() {
+        String endpoint = "/product/read.php";
+        ValidatableResponse response = given().when().get(endpoint).then();
+
+        response.log().body();
+
+    }
 
 }

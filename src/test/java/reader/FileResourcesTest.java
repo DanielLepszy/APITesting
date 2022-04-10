@@ -16,7 +16,7 @@ public class FileResourcesTest {
         String propertyName = "HOST_URL";
         ReaderFileResources reader = new ReaderFileResources();
         String value = reader.readProperty(fileName, propertyName);
-        Assertions.assertEquals(value, "http://localhost:80/");
+        Assertions.assertEquals(value, "http://localhost:80/api_testing");
 
     }
     @DisplayName("Test loading an single property from non-existed property file")

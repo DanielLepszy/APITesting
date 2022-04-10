@@ -28,11 +28,14 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="800f2f52-954d-46c2-a165-edee7eb888fb">
-      <console name="Connection" type="STANDARD" schema="apitestingdb" session="Main"><![CDATA[select * from categories]]></console>
+      <console name="Connection" type="STANDARD" schema="apitestingdb" session="Main"><![CDATA[select * from categories
+where id=3]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="800f2f52-954d-46c2-a165-edee7eb888fb" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="800f2f52-954d-46c2-a165-edee7eb888fb" />
