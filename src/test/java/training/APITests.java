@@ -14,6 +14,9 @@ import static org.hamcrest.Matchers.*;
 
 public class APITests extends RestAssuredUtil {
 
+
+    private String base_path;
+
     @BeforeAll
     public static void setConfiguration() {
         String basePath = reader.readProperty("api", "BASE_PATH");
