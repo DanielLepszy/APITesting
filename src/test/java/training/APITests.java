@@ -1,9 +1,7 @@
 package training;
 
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import io.restassured.response.ValidatableResponse;
 import model.Product;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import training.util.RestAssuredUtil;
@@ -14,8 +12,6 @@ import static org.hamcrest.Matchers.*;
 
 public class APITests extends RestAssuredUtil {
 
-
-    private String base_path;
 
     @BeforeAll
     public static void setConfiguration() {
@@ -37,7 +33,7 @@ public class APITests extends RestAssuredUtil {
     public void getDeserializedSingleProduct() {
         String endpoint = "/product/read_one.php";
 
-        Product product = new Product(18,"Magnesium 250 mg (100 tablets)","A daily dose of our Multi-Vitamins fulfills a day’s nutritional needs for over 12 vitamins and minerals.",
+        Product product = new Product(18,"Multi-Vitamin (90 capsules)","A daily dose of our Multi-Vitamins fulfills a day’s nutritional needs for over 12 vitamins and minerals.",
                 10.00,4,"Supplements");
 //        ValidatableResponse response=
         Product response =
@@ -64,5 +60,4 @@ public class APITests extends RestAssuredUtil {
         response.log().body();
 
     }
-
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 
 public class FileResourcesTest {
@@ -16,7 +17,7 @@ public class FileResourcesTest {
         String propertyName = "HOST_URL";
         ReaderFileResources reader = new ReaderFileResources();
         String value = reader.readProperty(fileName, propertyName);
-        Assertions.assertEquals(value, "http://localhost:80/api_testing");
+        Assertions.assertEquals(value, "http://localhost:80");
 
     }
     @DisplayName("Test loading an single property from non-existed property file")
@@ -56,4 +57,5 @@ public class FileResourcesTest {
         Assertions.assertEquals(value, "root");
 
     }
+
 }

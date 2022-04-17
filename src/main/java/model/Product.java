@@ -13,12 +13,12 @@ public class Product {
 
     //Used for GET
     public Product(int id, String name, String description, double price,int category_id, String category_name) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category_id = category_id;
-        this.category_name = category_name;
+        setId(id);
+        setName(name);
+        setDescription(description);
+        setPrice(price);
+        setCategory_id(category_id);
+        setCategory_name(category_name);
     }
 
     public Product() {
